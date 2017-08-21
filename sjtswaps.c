@@ -5,6 +5,7 @@
 
 
 #include "stdio.h"
+#include "draw.h"
 
 #define LEFT 0
 #define RIGHT 1
@@ -111,6 +112,9 @@ void perm(int n, Draw draw,int (*f)(Draw,Permute))
 {
   int i, k, r;
   Permute p;
+  int a[8], b[8];
+  p.v = a;
+  p.d = b;
   for (i = 0; i < n; i++) {
     p.v[i] = i + 1;
     p.d[i] = LEFT;

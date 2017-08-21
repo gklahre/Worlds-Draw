@@ -20,3 +20,6 @@ typedef struct Permute{
 	int d[8];
 	int cnt;
 } Permute;
+
+#define LEFT 0
+#define RIGHT 1

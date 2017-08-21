@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "draw.h"
 
 void getFirstThird(Draw draw){
 	perm(4,draw,poolperm);
