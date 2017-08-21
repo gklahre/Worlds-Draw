@@ -7,8 +7,8 @@ typedef struct Results{
 }Results;
 
 typedef struct Permute{
-	int v[8];
-	int d[8];
+	int v[16];
+	int d[16];
 	int cnt;
 }Permute;
 
