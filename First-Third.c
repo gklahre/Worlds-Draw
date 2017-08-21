@@ -16,7 +16,7 @@ int poolperm(Draw draw,Permute p){
 	}
 }
 
-void poolpermtest(Draw draw,teamNames[16][3]){
+void poolpermtest(Draw draw,char teamNames[16][3]){
 	int i, j;
 	for(i=0;i<24;i++){		
 		printf("Iteration %d|P1: %s|P2: %s|P3: %s|P4 :%s",i,teamNames[(draw.first[24][0])],\
