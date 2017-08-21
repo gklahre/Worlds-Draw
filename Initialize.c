@@ -8,19 +8,19 @@ int main(int argc,char ** argv){
 		return;
 	}
 	Draw draw;
-	if(atoi(argv[1]) == 0){
+	if(atoi(argv[1]) != 0){
 		draw.max = atoi(argv[1]);
 	}else{
 		printf("Argument not an integer\n");
 		return;
 	}
-	char teamNames[16][3];
+	const char *teamNames[16];
 	createTeams(teamNames);
-	getFirstThird();
+	getFirstThird(draw);
 	poolpermtest(draw,teamNames);
 	return 0;
 }
-void createTeams(int ** teamNames){
+void createTeams(const char *teamNames[16]){
 	//POOL 1 TEAMS
 	teamNames[0] = "ROX";
 	teamNames[1] = "EDG";
@@ -40,4 +40,5 @@ void createTeams(int ** teamNames){
 	teamNames[13] = "C9";
 	teamNames[14] = "ANX";
 	teamNames[15] = "INZ";
+	printf("createTeams done,");
 }

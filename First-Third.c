@@ -10,14 +10,15 @@ void getFirstThird(Draw draw){
 //A function to be used exclusively in perm.
 int poolperm(Draw draw,Permute p){
 	int i;
-	for(i=0,i<4;i++){
+	for(i=0;i<4;i++){
 		draw.first[p.cnt-1][i] = ((p.v[i])- 1); 
 		draw.third[p.cnt-1][i] = ((p.v[i]) + 11);
 	}
+	return 0;
 }
 
-void poolpermtest(Draw draw,char teamNames[16][3]){
-	int i, j;
+void poolpermtest(Draw draw,const char *teamNames[16]){
+	int i;
 	for(i=0;i<24;i++){		
 		printf("Iteration %d|P1: %s|P2: %s|P3: %s|P4 :%s",i,teamNames[(draw.first[24][0])],\
 			teamNames[(draw.first[24][1])],teamNames[(draw.first[24][2])],teamNames[(draw.first[24][3])]);

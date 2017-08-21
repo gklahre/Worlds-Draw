@@ -22,10 +22,10 @@ typedef struct Draw{
 	
 }Draw;
 
-int poolpermtest(Draw draw,char teamNames[16][3]);
+void poolpermtest(Draw draw,const char *teamNames[16]);
 int poolperm(Draw draw,Permute p);
-int perm(int n,Draw draw,int (*f)(Draw,Permute));
-void createTeams(char teamNames[16][3]);
+void perm(int n,Draw draw,int (*f)(Draw,Permute));
+void createTeams(const char* teamNames[16]);
 void getFirstThird(Draw draw);
 
 #define LEFT 0

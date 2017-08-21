@@ -32,18 +32,18 @@ int sjtSwap(int n, int start, Permute p)
   static int sjtCount = 0;
 
   for (i = start; i < n + start; i++) {
-    if (d[i] == LEFT && i > start + 0) {
-      if (v[i] > v[i - 1]) {
-        if (v[i] > k) {
-          k = v[i];
+    if (p.d[i] == LEFT && i > start + 0) {
+      if (p.v[i] > p.v[i - 1]) {
+        if (p.v[i] > k) {
+          k = p.v[i];
           s = i;
           dir = LEFT;
         }
       }
-    } else if (d[i] == RIGHT && i < start + n - 1) {
-      if (v[i] > v[i + 1]) {
-        if (v[i] > k) {
-          k = v[i];
+    } else if (p.d[i] == RIGHT && i < start + n - 1) {
+      if (p.v[i] > p.v[i + 1]) {
+        if (p.v[i] > k) {
+          k = p.v[i];
           s = i;
           dir = RIGHT;
         }
@@ -56,9 +56,9 @@ int sjtSwap(int n, int start, Permute p)
 
 
   if (dir == LEFT) {
-    swap(s, s - 1);
+    swap(s, s - 1,p);
   } else {
-    swap(s, s + 1);
+    swap(s, s + 1,p);
   }
 
   // printf("%3d ", s * (dir ? 1 : -1));
@@ -69,10 +69,10 @@ int sjtSwap(int n, int start, Permute p)
   }
 
   for (i = start; i < start + n; i++) {
-    if (v[i] <= k)
+    if (p.v[i] <= k)
       continue;
     else
-      d[i] = (d[i] + 1) % 2; // change direction
+      p.d[i] = (p.d[i] + 1) % 2; // change direction
   }
   return k;
 }
@@ -112,9 +112,6 @@ void perm(int n, Draw draw,int (*f)(Draw,Permute))
 {
   int i, k, r;
   Permute p;
-  int a[8], b[8];
-  p.v = a;
-  p.d = b;
   for (i = 0; i < n; i++) {
     p.v[i] = i + 1;
     p.d[i] = LEFT;
@@ -138,7 +135,7 @@ void perm(int n, Draw draw,int (*f)(Draw,Permute))
     // change direction
     k = sjtSwap(n - 1, 1,p);
     if (k == -1) {
-      printf("\nperms = %d\n", cnt);
+      printf("\nperms = %d\n", p.cnt);
       return; 
     }
     p.cnt++;
@@ -160,7 +157,7 @@ void perm(int n, Draw draw,int (*f)(Draw,Permute))
     // change direction
     k = sjtSwap(n - 1, 0,p);
     if (k == -1) {
-      printf("\nperms = %d\n", cnt);
+      printf("\nperms = %d\n", p.cnt);
       return; 
     }
     p.cnt++;
