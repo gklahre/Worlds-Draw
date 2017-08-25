@@ -6,6 +6,7 @@
 
 #include "stdio.h"
 #include <stdlib.h>
+#include "WD.h"
 
 #define LEFT 0
 #define RIGHT 1
@@ -123,12 +124,11 @@ int sjtSwap(int n, int start, SwapPass *p)
 // 2 1 4 3 
 // 2 1 3 4 
 
-void main(int argc, char *argv[])
+void perm(int n)
 {
   SwapPass * p = malloc(sizeof(SwapPass));
   p->v = malloc(sizeof(int) * 16);
   p->d = malloc(sizeof(int) * 16);
-  int n = atoi(argv[1]);
   int i, k;
 
   for (i = 0; i < n; i++) {
