@@ -8,8 +8,17 @@ int main(int argc, char ** argv){
 		return THE_EXIT_FAILURE;
 	}
 	int n = atoi(argv[1]);
+	int i, j;
 	Draw * D = allocateDraw();
-	perm(n);
+	printf("Hey there, %d!\n",n);
+	perm(4, D);
+	printf("\nNow for a test!\n");
+	for(i=0;i < 24; i++){
+		printf("\nCycle %d: ");
+		for(j=0;j<4;j++){
+			printf("%d",D->first[i][j]);
+		}
+	}
 	freeDraw(D);
 }
 
