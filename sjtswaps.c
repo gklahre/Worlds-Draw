@@ -9,49 +9,55 @@
 #define LEFT 0
 #define RIGHT 1
 
-int v[16], d[16];
+//int v[16], d[16];
 
-void swap(int i, int j)
+typedef struct SwapPass{
+  int cnt;
+  int v[16];
+  int d[16];
+} SwapPass;
+
+void swap(SwapPass p, int i, int j)
 {
   int tmp;
 
-  tmp = v[i];
-  v[i] = v[j];
+  tmp = p.v[i];
+  p.v[i] = p.v[j];
   v[j] = tmp;
 
-  tmp = d[i];
-  d[i] = d[j];
-  d[j] = tmp;
+  tmp = p.d[i];
+  p.d[i] = p.d[j];
+  p.d[j] = tmp;
 }
 
-void print_p(int n)
+void print_p(int n, SwapPass p)
 {
   int i;
 
   for (i = 0; i < n; i++)
-    printf("%d ", v[i]);
+    printf("%d ", p.v[i]);
   printf("\n");
 }
 
-int sjtSwap(int n, int start)
+int sjtSwap(int n, int start, SwapPass p)
 {
   int i, j;
   int k = -1, dir, s;
   static int sjtCount = 0;
 
   for (i = start; i < n + start; i++) {
-    if (d[i] == LEFT && i > start + 0) {
-      if (v[i] > v[i - 1]) {
-        if (v[i] > k) {
-          k = v[i];
+    if (p.d[i] == LEFT && i > start + 0) {
+      if (p.v[i] > p.v[i - 1]) {
+        if (p.v[i] > k) {
+          k = p.v[i];
           s = i;
           dir = LEFT;
         }
       }
-    } else if (d[i] == RIGHT && i < start + n - 1) {
-      if (v[i] > v[i + 1]) {
-        if (v[i] > k) {
-          k = v[i];
+    } else if (p.d[i] == RIGHT && i < start + n - 1) {
+      if (p.v[i] > v[i + 1]) {
+        if (p.v[i] > k) {
+          k = p.v[i];
           s = i;
           dir = RIGHT;
         }
@@ -64,9 +70,9 @@ int sjtSwap(int n, int start)
 
 
   if (dir == LEFT) {
-    swap(s, s - 1);
+    swap(p,s, s - 1);
   } else {
-    swap(s, s + 1);
+    swap(p,s, s + 1);
   }
 
   // printf("%3d ", s * (dir ? 1 : -1));
@@ -77,10 +83,10 @@ int sjtSwap(int n, int start)
   }
 
   for (i = start; i < start + n; i++) {
-    if (v[i] <= k)
+    if (p.v[i] <= k)
       continue;
     else
-      d[i] = (d[i] + 1) % 2; // change direction
+      p.d[i] = (p.d[i] + 1) % 2; // change direction
   }
   return k;
 }
@@ -118,48 +124,49 @@ int sjtSwap(int n, int start)
 
 void main(int argc, char *argv[])
 {
+  SwapPass p;
   int n = atoi(argv[1]);
-  int i, cnt, k;
+  int i, k;
 
   for (i = 0; i < n; i++) {
-    v[i] = i + 1;
-    d[i] = LEFT;
+    p.v[i] = i + 1;
+    p.d[i] = LEFT;
   }
 
-  print_p(n);
-  cnt = 1;
+  print_p(n,p);
+  p.cnt = 1;
   while (1) {
     // generate n permutations travelling left with n moving
     for (i = n - 1; i > 0; i--) {
-      swap(i, i - 1);
-      cnt++;
-      print_p(n);
+      swap(p,i, i - 1);
+      p.cnt++;
+      print_p(n,p);
     }
 
     // change direction
-    k = sjtSwap(n - 1, 1);
+    k = sjtSwap(n - 1, 1,p);
     if (k == -1) {
-      printf("\nperms = %d\n", cnt);
+      printf("\nperms = %d\n", p.cnt);
       return; 
     }
-    cnt++;
-    print_p(n);
+    p.cnt++;
+    print_p(n,p);
 
     // generate n permutations travelling right with n moving
     for (i = 0; i < n - 1; i++) {
-      swap(i, i + 1);
-      print_p(n);
-      cnt++;
+      swap(p,i, i + 1);
+      print_p(n,p);
+      p.cnt++;
     }
 
     // change direction
-    k = sjtSwap(n - 1, 0);
+    k = sjtSwap(n - 1, 0,p);
     if (k == -1) {
-      printf("\nperms = %d\n", cnt);
+      printf("\nperms = %d\n", p.cnt);
       return; 
     }
-    cnt++;
-    print_p(n);
+    p.cnt++;
+    print_p(n,p);
   }  
 }
 
