@@ -13,21 +13,21 @@
 
 typedef struct SwapPass{
   int cnt;
-  int v[16];
-  int d[16];
+  int *v;
+  int *d;
 } SwapPass;
 
-void swap(SwapPass p, int i, int j)
+void swap(SwapPass *p, int i, int j)
 {
   int tmp;
 
   tmp = p.v[i];
-  p.v[i] = p.v[j];
-  v[j] = tmp;
+  p->v[i] = p.v[j];
+  p->v[j] = tmp;
 
   tmp = p.d[i];
-  p.d[i] = p.d[j];
-  p.d[j] = tmp;
+  p->d[i] = p.d[j];
+  p->d[j] = tmp;
 }
 
 void print_p(int n, SwapPass p)
@@ -39,7 +39,7 @@ void print_p(int n, SwapPass p)
   printf("\n");
 }
 
-int sjtSwap(int n, int start, SwapPass p)
+int sjtSwap(int n, int start, SwapPass *p)
 {
   int i, j;
   int k = -1, dir, s;
@@ -55,7 +55,7 @@ int sjtSwap(int n, int start, SwapPass p)
         }
       }
     } else if (p.d[i] == RIGHT && i < start + n - 1) {
-      if (p.v[i] > v[i + 1]) {
+      if (p.v[i] > p.v[i + 1]) {
         if (p.v[i] > k) {
           k = p.v[i];
           s = i;
@@ -124,7 +124,9 @@ int sjtSwap(int n, int start, SwapPass p)
 
 void main(int argc, char *argv[])
 {
-  SwapPass p;
+  SwapPass p = malloc(sizeof(SwapPass));
+  p->v = malloc(sizeof(int)*16);
+  p->d = malloc(sizeof(int)*16);
   int n = atoi(argv[1]);
   int i, k;
 
@@ -147,6 +149,9 @@ void main(int argc, char *argv[])
     k = sjtSwap(n - 1, 1,p);
     if (k == -1) {
       printf("\nperms = %d\n", p.cnt);
+      free(p->v);
+      free(p->d);
+      free(p);
       return; 
     }
     p.cnt++;
@@ -163,6 +168,9 @@ void main(int argc, char *argv[])
     k = sjtSwap(n - 1, 0,p);
     if (k == -1) {
       printf("\nperms = %d\n", p.cnt);
+      free(p->d);
+      free(p->v);
+      free(p);
       return; 
     }
     p.cnt++;
