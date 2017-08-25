@@ -5,7 +5,7 @@
 int main(int argc, char ** argv){
 	if(argc != 2){
 		printf("Wrong number of arguments.\n");
-		return EXIT_FAILURE;
+		return THE_EXIT_FAILURE;
 	}
 	int n = atoi(argv[1]);
 	Draw * D = allocateDraw();
@@ -41,6 +41,7 @@ Draw * allocateDraw(void){
 }
 
 void freeDraw(Draw * D){
+	int i;
 	for(i=0;i < 24;i++){
 		free(D->first[i]);
 	}

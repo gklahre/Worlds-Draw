@@ -13,12 +13,6 @@
 
 //int v[16], d[16];
 
-typedef struct SwapPass {
-  int cnt;
-  int *v;
-  int *d;
-} SwapPass;
-
 void swap(SwapPass *p, int i, int j)
 {
   int tmp;
