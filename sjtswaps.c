@@ -32,8 +32,8 @@ void print_p(int n, SwapPass *p, Draw* D)
 
   for (i = 0; i < n; i++){
     printf("%d ", p->v[i]);
-    //D->first[((p->cnt)-1)][i] = p->v[i];
-    //D->third[((p->cnt)-1)][i] = p->v[i];
+    D->first[((p->cnt)-1)][i] = p->v[i];
+    D->third[((p->cnt)-1)][i] = p->v[i];
   }
   printf("Count = %d",p->cnt);
   printf("\n");
@@ -148,9 +148,8 @@ void perm(int n,Draw * D)
     p->v[i] = i + 1;
     p->d[i] = LEFT;
   }
-
-  print_p(n,p,D);
   p->cnt = 1;
+  print_p(n,p,D);
   while (1) {
     // generate n permutations travelling left with n moving
     for (i = n - 1; i > 0; i--) {
