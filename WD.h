@@ -21,7 +21,7 @@ typedef struct Draw {
 
 Draw * allocateDraw(void);
 void freeDraw(Draw * D);
-void perm(int n);
+void perm(int n,Draw * D);
 
 #define THE_EXIT_FAILURE 0
 #define THE_EXIT_SUCCESS 1

@@ -26,13 +26,21 @@ void swap(SwapPass *p, int i, int j)
   p->d[j] = tmp;
 }
 
-void print_p(int n, SwapPass *p)
+void print_p(int n, SwapPass *p, Draw* D)
 {
   int i;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; i++){
     printf("%d ", p->v[i]);
+    //D->first[((p->cnt)-1)][i] = p->v[i];
+    //D->third[((p->cnt)-1)][i] = p->v[i];
+  }
+  printf("Count = %d",p->cnt);
   printf("\n");
+  if(D->max == p->cnt){
+    printf("Celebrate!\n");
+  }
+
 }
 
 int sjtSwap(int n, int start, SwapPass *p)
@@ -118,58 +126,69 @@ int sjtSwap(int n, int start, SwapPass *p)
 // 2 1 4 3 
 // 2 1 3 4 
 
-void perm(int n)
+void perm(int n,Draw * D)
 {
   SwapPass * p = malloc(sizeof(SwapPass));
+  if(p == NULL){
+    printf("Memory issues.\n");
+    return;
+  }
   p->v = malloc(sizeof(int) * 16);
+  if(p->v == NULL){
+    printf("Memory issues.\n");
+    return;
+  }
   p->d = malloc(sizeof(int) * 16);
+  if(p->d == NULL){
+    printf("Memory issues.\n");
+    return;
+  }
   int i, k;
-
   for (i = 0; i < n; i++) {
     p->v[i] = i + 1;
     p->d[i] = LEFT;
   }
 
-  print_p(n,p);
+  print_p(n,p,D);
   p->cnt = 1;
   while (1) {
     // generate n permutations travelling left with n moving
     for (i = n - 1; i > 0; i--) {
       swap(p,i, i - 1);
       p->cnt++;
-      print_p(n,p);
+      print_p(n,p,D);
     }
 
     // change direction
     k = sjtSwap(n - 1, 1,p);
     if (k == -1) {
-      printf("\nperms = %d\n", p->cnt);
+      printf("\nperms = %d, max = %d\n", p->cnt,D->max);
       free(p->v);
       free(p->d);
       free(p);
       return; 
     }
     p->cnt++;
-    print_p(n,p);
+    print_p(n,p,D);
 
     // generate n permutations travelling right with n moving
     for (i = 0; i < n - 1; i++) {
       swap(p,i, i + 1);
-      print_p(n,p);
       p->cnt++;
+      print_p(n,p,D);
     }
 
     // change direction
     k = sjtSwap(n - 1, 0,p);
     if (k == -1) {
-      printf("\nperms = %d\n", p->cnt);
+      printf("\nperms = %d, max = %d\n", p->cnt,D->max);
       free(p->d);
       free(p->v);
       free(p);
       return; 
     }
     p->cnt++;
-    print_p(n,p);
+    print_p(n,p,D);
   }  
 }
 
